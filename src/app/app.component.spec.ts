@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'mongo-images-new'`, () => {
+  it(`should have as title 'media-uploader-mean-app'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('mongo-images-new');
+    expect(app.title).toEqual('media-uploader-mean-app');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('mongo-images-new app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('media-uploader-mean-app app is running!');
   });
 });

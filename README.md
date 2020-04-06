@@ -1,18 +1,29 @@
-# MongoImagesNew
+# media-uploader-mean-app
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.7.
 
-## Development server
+## Overview
+The purpsose of the media-uploader-mean-app is to provide a simple media uploading server. The application accepts upto 4 files of all image types and video types mp4, webm, and ogv. All videos are converted to the other acceptable formats before the http response for genreal browser compatibablity. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Install Dependencies
+Run `npm install` to download the necessary node dependencies for building and runnign this app. 
 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+## Start MongoDB
+
+This app depends on a MongoDB server running on local host. The easiest way to get a mongo database up and runnign is with their Docker image.
+`docker run -p 27017:27017 --rm mongo:bionic`
+
+## Development server
+
+Run `node server` for a dev server. Navigate to `http://localhost:3000/`. 
+
+## Code scaffolding
+
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Running unit tests
 

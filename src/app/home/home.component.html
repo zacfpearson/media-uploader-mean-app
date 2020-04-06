@@ -1,0 +1,73 @@
+<mat-card class="example-card">
+  <mat-card-title style="margin:0 auto;width:100%;">Create Post</mat-card-title>
+  <button style="margin:0 auto;width:100%;" color="{{showAddBlock ? 'warn' : 'primary'}}" type = "submit" mat-icon-button color="primary" (click)="switchShowAddBlock()">
+    <mat-icon>{{showAddBlock ? 'unfold_less' : 'unfold_more'}}</mat-icon>
+  </button>
+  <ng-container *ngIf="showAddBlock">
+    <mat-form-field class="input-full-width">
+      <mat-label>Comment</mat-label>
+      <textarea matInput name="text" [(ngModel)] = "text" required wrap="soft"></textarea>
+    </mat-form-field>
+    <div class = "input-full-width">
+      <mat-card-subtitle>Media</mat-card-subtitle>
+      <div *ngIf="tooManyFiles" color="warn">Maximum of 4 files aloud</div>
+      <label for="media" class = "custom-file-upload" style="margin-bottom:7px;">
+        <mat-list>
+          <mat-list-item>
+            <mat-icon color="primary" mat-list-icon>add_photo_alternate</mat-icon>
+            <div mat-line>Upload Media...</div>
+          </mat-list-item>
+        </mat-list>
+      </label>
+      <input type="file" (change)="onFileChange($event)" id="media" multiple accept="image/*,video/*"/>
+      <br>
+      <div style="margin:0 auto;width:100%;" >
+        <mat-list *ngIf="selectedFiles">
+          <div mat-subheader>Selected Files</div>
+          <mat-list-item *ngFor="let f of selectedFiles">
+            <mat-icon color="accent" mat-list-icon>{{f.type.substring(0,5) === 'video' ? 'videocam' : 'image'}}</mat-icon>
+            <div mat-line>{{f.name}}</div>
+          </mat-list-item>
+      </mat-list>
+      </div>
+      <div style="width:100%;" >
+        <button *ngIf="!submitted; else spinnerBlock" type = "submit" style="margin:0 auto;width:100%;" mat-icon-button color="primary" (click)="onSubmit()">
+          <mat-icon color="primary">post_add</mat-icon>
+        </button>
+        <ng-template #spinnerBlock>
+          <!-- Test THIS: <mat-card-content></mat-card-content> -->
+          <!--style="margin:0 auto;width:100%;"-->
+          <mat-progress-spinner
+            color="primary">
+          </mat-progress-spinner>
+        </ng-template>
+      </div>
+    </div>
+  </ng-container>
+</mat-card>
+
+<ng-container *ngFor="let post of posts">
+    <mat-card class="example-card">
+      <mat-card-content>
+        <mat-grid-list cols="2" rowHeight="4:3">
+          <mat-grid-tile *ngFor="let med of post?.media">
+            <video *ngIf="isVideo(med); else imageBlock" (mouseleave)="onPauseVideo($event)" (mouseover)="onPlayVideo($event)">
+              <source src="http://localhost:3000/api/media/{{med.split('.').shift()}}.mp4" type="video/mp4">
+              <source src="http://localhost:3000/api/media/{{med.split('.').shift()}}.webm" type="video/webm">
+              <source src="http://localhost:3000/api/media/{{med.split('.').shift()}}.ogv" type="video/ogg">
+              Video Not supported for your browser
+            </video>
+            <ng-template #imageBlock>
+              <img mat-card-image src="http://localhost:3000/api/media/{{med}}"/>
+            </ng-template>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <p>
+          {{post?.text}}
+        </p>
+      </mat-card-content>
+      <button *ngIf="isAdmin()" style="margin:0 auto;width:100%;" mat-icon-button (click)="onDelete(post)">
+        <mat-icon color="warn">remove_circle_outline</mat-icon>
+      </button>
+    </mat-card>
+  </ng-container>
