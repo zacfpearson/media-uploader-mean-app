@@ -159,15 +159,13 @@ router.get('/media/:filename', (req,res)=>{
 });
 
 router.get('/posts',function(req,res,next){
-  console.log('here!');
   posts.find().exec(function(err,inputs){
     if(err){
       return res.status(500).json({
         title:'Error',
         error:err
       });
-    }
-    console.log('no error');
+    };
     console.log(inputs);
     res.status(200).json({
       message:'Success',
