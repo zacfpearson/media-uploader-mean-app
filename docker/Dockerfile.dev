@@ -1,0 +1,18 @@
+FROM node:lts-stretch-slim
+
+COPY package*.json /media-app/
+
+WORKDIR /media-app
+
+RUN apt update -y && \
+    apt install ffmpeg -y && \
+    npm install -g @angular/cli && \
+    npm install 
+
+COPY . /media-app
+
+RUN ng build
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]

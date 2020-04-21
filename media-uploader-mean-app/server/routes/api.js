@@ -14,7 +14,7 @@ Transform.prototype._transform = function (chunk, enc, cb) {
   cb();
 };
 
-let uri = 'mongodb://localhost/posts';
+let uri = 'mongodb://media-upload-db/posts';
 
 const upload = multer();
 

@@ -1,0 +1,13 @@
+FROM node:12-alpine as builder
+COPY . /media-app
+WORKDIR /media-app
+RUN npm install -g @angular/cli && \
+    npm install && \
+    ng build 
+
+FROM node:12-alpine as app
+RUN apk add --no-cache ffmpeg
+COPY --from=builder /media-app /media-app
+WORKDIR /media-app
+EXPOSE 3000
+CMD ["node", "server.js"]
